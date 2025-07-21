@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PROJECT S.I.C.K.</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      font-size: 1.2em;
+      padding: 5vw;
+      overflow: hidden;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #terminal {
+      white-space: pre-line;
+      animation: glitch 0.05s infinite alternate;
+      width: 100%;
+      max-width: 800px;
+      word-wrap: break-word;
+    }
+    @keyframes glitch {
+      from { opacity: 0.96; }
+      to { opacity: 1; }
+    }
+    .glitch {
+      animation: glitchText 0.1s infinite alternate;
+    }
+    @keyframes glitchText {
+      0% { text-shadow: 2px 0 red, -2px 0 blue; }
+      100% { text-shadow: -2px 0 red, 2px 0 blue; }
+    }
+    #overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: red;
+      font-size: 5vw;
+      font-weight: bold;
+      display: none;
+      text-shadow: 0 0 20px red;
+      z-index: 9999;
+      text-align: center;
+    }
+    #red-dot {
+      position: fixed;
+      top: 2vw;
+      right: 2vw;
+      width: 3vw;
+      height: 3vw;
+      background: red;
+      border-radius: 50%;
+      box-shadow: 0 0 15px red;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 4vw;
+        padding: 3vw;
+      }
+      #overlay {
+        font-size: 10vw;
+      }
+      #red-dot {
+        width: 5vw;
+        height: 5vw;
+        top: 4vw;
+        right: 4vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="red-dot"></div>
+  <div id="terminal"></div>
+  <div id="overlay">YOU ARE BEING WATCHED</div>
+  <audio id="glitchSound" src="https://cdn.pixabay.com/audio/2022/03/30/audio_60e7d6df2e.mp3" autoplay loop></audio>
+  <script>
+    const terminal = document.getElementById("terminal");
+    const overlay = document.getElementById("overlay");
+
+    let i = 0;
+    let percent = 0;
+    const lines = [
+      "[BOOTING PROJECT S.I.C.K.]",
+      "[CONNECTION TO TARGET ESTABLISHED]",
+      "[ACCESSING CAMERA FEED...]",
+      "[IP TRACE: SUCCESSFUL]",
+      "[DEVICE: WINDOWS 10 - HP ProBook]",
+      "[YOU SHOULDN'T HAVE OPENED THIS LINK]",
+      "[INJECTING SICK.EXE]",
+      "[DISABLING PROTOCOLS]"
+    ];
+
+    function typeLine() {
+      if (i < lines.length) {
+        terminal.innerHTML += `> ${lines[i]}\n`;
+        i++;
+        setTimeout(typeLine, 1000);
+      } else {
+        simulateDownload();
+      }
+    }
+
+    function simulateDownload() {
+      const interval = setInterval(() => {
+        terminal.innerHTML += `> SYSTEM INFECTION: ${percent}%\n`;
+        terminal.scrollTop = terminal.scrollHeight;
+        percent++;
+        if (percent > 100) {
+          clearInterval(interval);
+          endSequence();
+        }
+      }, 80);
+    }
+
+    function endSequence() {
+      terminal.innerHTML += "> [SENDING LOCATION TO SERVER...]\n";
+      setTimeout(() => {
+        terminal.innerHTML += "> [FATAL ERROR: YOUR SYSTEM IS COMPROMISED]\n";
+        setTimeout(() => {
+          overlay.style.display = 'block';
+          document.body.style.background = "black";
+          terminal.innerHTML = "\n\n\n[PRESS ANY KEY TO OBEY]";
+        }, 2000);
+      }, 1500);
+    }
+
+    window.onload = () => {
+      typeLine();
+    };
+  </script>
+</body>
+</html>
